@@ -21,7 +21,9 @@ Patch8:		%{name}-1.8.1-lib64.patch
 BuildRequires:	gcc-gfortran
 BuildRequires:	jpeg-devel
 BuildRequires:	krb5-devel
+%ifnarch %{arm}
 BuildRequires:	quadmath-devel
+%endif
 BuildRequires:	pkgconfig(openssl)
 BuildRequires:	pkgconfig(zlib)
 
