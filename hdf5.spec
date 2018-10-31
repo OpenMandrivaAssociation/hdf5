@@ -10,7 +10,7 @@
 Summary:	HDF5 library
 Name:		hdf5
 Version:	1.10.1
-Release:	5
+Release:	6
 License:	Distributable (see included COPYING)
 Group:		System/Libraries
 Url:		http://www.hdfgroup.org/HDF5/
