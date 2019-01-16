@@ -9,12 +9,12 @@
 
 Summary:	HDF5 library
 Name:		hdf5
-Version:	1.10.1
-Release:	6
+Version:	1.10.4
+Release:	1
 License:	Distributable (see included COPYING)
 Group:		System/Libraries
 Url:		http://www.hdfgroup.org/HDF5/
-Source0:	http://ftp.hdfgroup.org/ftp/HDF5/current/src/%{name}-%{version}.tar.bz2
+Source0:	https://support.hdfgroup.org/ftp/HDF5/current18/src/%{name}-%{version}.tar.bz2
 Patch0:		%{name}-1.8.8-fix-str-fmt.patch
 Patch8:		%{name}-1.8.1-lib64.patch
 

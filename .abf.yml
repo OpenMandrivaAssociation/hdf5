@@ -1,2 +1,4 @@
-sources:
+removed_sources:
   hdf5-1.10.1.tar.bz2: 22edee1f4ed603ea9544daec3492874fa3028bbb
+sources:
+  hdf5-1.10.4.tar.bz2: db7e6ec7becf288149a655598f8cb0c5fb6234d8
