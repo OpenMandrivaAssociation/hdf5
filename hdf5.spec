@@ -1,16 +1,18 @@
 %define _disable_ld_no_undefined 0
 %define _disable_lto 1
 
-%define major	101
+%define major	103
 %define hl_major	100
+%define forfan_major	102
+
 %define libname %mklibname hdf5_ %{major}
 %define libname_hl %mklibname hdf5_hl %{hl_major}
 %define devname %mklibname %{name} -d
 
 Summary:	HDF5 library
 Name:		hdf5
-Version:	1.10.1
-Release:	6
+Version:	1.10.5
+Release:	1
 License:	Distributable (see included COPYING)
 Group:		System/Libraries
 Url:		http://www.hdfgroup.org/HDF5/
@@ -95,7 +97,7 @@ find %{buildroot} -type f -size 0 -name .depend -print0 |xargs -0 rm -f
 	--enable-linux-lfs \
 	--enable-build-mode=production
 
-%make
+%make_build
 
 #%check
 # all tests must pass on the following architectures
@@ -107,7 +109,7 @@ find %{buildroot} -type f -size 0 -name .depend -print0 |xargs -0 rm -f
 
 %install
 mkdir -p %{buildroot}%{_libdir}
-%makeinstall_std
+%make_install
 
 %files
 %doc COPYING MANIFEST README.txt release_docs/RELEASE.txt
@@ -116,7 +118,7 @@ mkdir -p %{buildroot}%{_libdir}
 %files -n %{libname}
 %{_libdir}/libhdf5.so.%{major}*
 %{_libdir}/libhdf5_cpp.so.%{major}*
-%{_libdir}/libhdf5_fortran.so.%{hl_major}*
+%{_libdir}/libhdf5_fortran.so.%{forfan_major}*
 
 %files -n %{libname_hl}
 %{_libdir}/libhdf5_hl.so.%{hl_major}*
