@@ -114,9 +114,9 @@ mkdir -p %{buildroot}%{_libdir}
 %{_bindir}/*
 
 %files -n %{libname}
-%{_libdir}/libhdf5.so.%{major}*
-%{_libdir}/libhdf5_cpp.so.%{major}*
-%{_libdir}/libhdf5_fortran.so.%{hl_major}*
+#{_libdir}/libhdf5.so.%{major}*
+#{_libdir}/libhdf5_cpp.so.%{major}*
+#{_libdir}/libhdf5_fortran.so.%{hl_major}*
 
 %files -n %{libname_hl}
 %{_libdir}/libhdf5_hl.so.%{hl_major}*
