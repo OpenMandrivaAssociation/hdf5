@@ -1,8 +1,10 @@
 %define _disable_ld_no_undefined 0
 %define _disable_lto 1
 
-%define major	101
+%define major	103
 %define hl_major	100
+%define forfan_major	102
+
 %define libname %mklibname hdf5_ %{major}
 %define libname_hl %mklibname hdf5_hl %{hl_major}
 %define devname %mklibname %{name} -d
@@ -114,9 +116,9 @@ mkdir -p %{buildroot}%{_libdir}
 %{_bindir}/*
 
 %files -n %{libname}
-#{_libdir}/libhdf5.so.%{major}*
-#{_libdir}/libhdf5_cpp.so.%{major}*
-#{_libdir}/libhdf5_fortran.so.%{hl_major}*
+%{_libdir}/libhdf5.so.%{major}*
+%{_libdir}/libhdf5_cpp.so.%{major}*
+%{_libdir}/libhdf5_fortran.so.%{forfan_major}*
 
 %files -n %{libname_hl}
 %{_libdir}/libhdf5_hl.so.%{hl_major}*
