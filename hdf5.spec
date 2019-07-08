@@ -9,8 +9,8 @@
 
 Summary:	HDF5 library
 Name:		hdf5
-Version:	1.10.1
-Release:	6
+Version:	1.10.5
+Release:	1
 License:	Distributable (see included COPYING)
 Group:		System/Libraries
 Url:		http://www.hdfgroup.org/HDF5/
@@ -95,7 +95,7 @@ find %{buildroot} -type f -size 0 -name .depend -print0 |xargs -0 rm -f
 	--enable-linux-lfs \
 	--enable-build-mode=production
 
-%make
+%make_build
 
 #%check
 # all tests must pass on the following architectures
@@ -107,7 +107,7 @@ find %{buildroot} -type f -size 0 -name .depend -print0 |xargs -0 rm -f
 
 %install
 mkdir -p %{buildroot}%{_libdir}
-%makeinstall_std
+%make_install
 
 %files
 %doc COPYING MANIFEST README.txt release_docs/RELEASE.txt
