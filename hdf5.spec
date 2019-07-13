@@ -25,6 +25,7 @@ BuildRequires:	jpeg-devel
 BuildRequires:	krb5-devel
 %ifnarch %{armx} riscv64
 BuildRequires:	quadmath-devel
+BuildRequires:	atomic-devel
 %endif
 BuildRequires:	pkgconfig(openssl)
 BuildRequires:	pkgconfig(zlib)
