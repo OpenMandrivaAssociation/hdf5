@@ -1,4 +1,5 @@
 %define _disable_ld_no_undefined 0
+# Needed because we mix different compilers (clang and gfortran)
 %define _disable_lto 1
 
 %define major	103
@@ -11,12 +12,13 @@
 
 Summary:	HDF5 library
 Name:		hdf5
-Version:	1.10.6
-Release:	2
+Version:	1.10.10
+Release:	1
 License:	Distributable (see included COPYING)
 Group:		System/Libraries
 Url:		http://www.hdfgroup.org/HDF5/
-Source0:	http://ftp.hdfgroup.org/ftp/HDF5/current/src/%{name}-%{version}.tar.bz2
+# Also: https://portal.hdfgroup.org/display/support/Downloads
+Source0:	https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-%(echo %{version}|cut -d. -f1-2)/hdf5-%{version}/src/hdf5-%{version}.tar.bz2
 Patch0:		%{name}-1.8.8-fix-str-fmt.patch
 Patch8:		%{name}-1.8.1-lib64.patch
 
@@ -113,7 +115,7 @@ mkdir -p %{buildroot}%{_libdir}
 %make_install
 
 %files
-%doc COPYING MANIFEST README.txt release_docs/RELEASE.txt
+%doc COPYING release_docs/RELEASE.txt
 %{_bindir}/*
 
 %files -n %{libname}
