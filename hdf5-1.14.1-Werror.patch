@@ -1,0 +1,40 @@
+diff -up hdf5-1.14.1-2/configure.ac.omv~ hdf5-1.14.1-2/configure.ac
+--- hdf5-1.14.1-2/configure.ac.omv~	2023-08-15 22:19:13.665925503 +0200
++++ hdf5-1.14.1-2/configure.ac	2023-08-15 22:19:29.978038303 +0200
+@@ -184,11 +184,11 @@ saved_user_CPPFLAGS="$CPPFLAGS"
+ 
+ ## Strip out -Werror from CFLAGS since that can cause checks to fail when
+ ## compiling the test program fails due to warnings
+-CFLAGS="`echo $CFLAGS | sed -e 's/-Werror//g'`"
+-CXXFLAGS="`echo $CXXFLAGS | sed -e 's/-Werror//g'`"
+-FCFLAGS="`echo $FCFLAGS | sed -e 's/-Werror//g'`"
+-JAVACFLAGS="`echo $JAVACFLAGS | sed -e 's/-Werror//g'`"
+-CPPFLAGS="`echo $CPPFLAGS | sed -e 's/-Werror//g'`"
++CFLAGS="`echo $CFLAGS | sed -e 's/-Werror //g'`"
++CXXFLAGS="`echo $CXXFLAGS | sed -e 's/-Werror //g'`"
++FCFLAGS="`echo $FCFLAGS | sed -e 's/-Werror //g'`"
++JAVACFLAGS="`echo $JAVACFLAGS | sed -e 's/-Werror //g'`"
++CPPFLAGS="`echo $CPPFLAGS | sed -e 's/-Werror //g'`"
+ 
+ ## Support F9X variable to define Fortran compiler if FC variable is
+ ## not used.  This should be deprecated in the future.
+diff -up hdf5-1.14.1-2/configure.omv~ hdf5-1.14.1-2/configure
+--- hdf5-1.14.1-2/configure.omv~	2023-08-15 22:19:31.493048816 +0200
++++ hdf5-1.14.1-2/configure	2023-08-15 22:19:41.831120702 +0200
+@@ -4790,11 +4790,11 @@ saved_user_CPPFLAGS="$CPPFLAGS"
+ 
+ ## Strip out -Werror from CFLAGS since that can cause checks to fail when
+ ## compiling the test program fails due to warnings
+-CFLAGS="`echo $CFLAGS | sed -e 's/-Werror//g'`"
+-CXXFLAGS="`echo $CXXFLAGS | sed -e 's/-Werror//g'`"
+-FCFLAGS="`echo $FCFLAGS | sed -e 's/-Werror//g'`"
+-JAVACFLAGS="`echo $JAVACFLAGS | sed -e 's/-Werror//g'`"
+-CPPFLAGS="`echo $CPPFLAGS | sed -e 's/-Werror//g'`"
++CFLAGS="`echo $CFLAGS | sed -e 's/-Werror //g'`"
++CXXFLAGS="`echo $CXXFLAGS | sed -e 's/-Werror //g'`"
++FCFLAGS="`echo $FCFLAGS | sed -e 's/-Werror //g'`"
++JAVACFLAGS="`echo $JAVACFLAGS | sed -e 's/-Werror //g'`"
++CPPFLAGS="`echo $CPPFLAGS | sed -e 's/-Werror //g'`"
+ 
+ ## Support F9X variable to define Fortran compiler if FC variable is
+ ## not used.  This should be deprecated in the future.

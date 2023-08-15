@@ -2,25 +2,29 @@
 # Needed because we mix different compilers (clang and gfortran)
 %define _disable_lto 1
 
-%define major	103
-%define hl_major	100
-%define forfan_major	102
+%define major	310
+%define hl_major	310
+%define forfan_major	310
 
-%define libname %mklibname hdf5_ %{major}
-%define libname_hl %mklibname hdf5_hl %{hl_major}
+%define libname %mklibname hdf5
+%define libname_hl %mklibname hdf5_hl
 %define devname %mklibname %{name} -d
+
+# As of 1.14.1_2, building fortran bindings
+# with cmake is broken, so for now we'll continue
+# with autoconf
+%bcond_with cmake
 
 Summary:	HDF5 library
 Name:		hdf5
-Version:	1.10.10
+Version:	1.14.1_2
 Release:	1
 License:	Distributable (see included COPYING)
 Group:		System/Libraries
 Url:		http://www.hdfgroup.org/HDF5/
 # Also: https://portal.hdfgroup.org/display/support/Downloads
-Source0:	https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-%(echo %{version}|cut -d. -f1-2)/hdf5-%{version}/src/hdf5-%{version}.tar.bz2
-Patch0:		%{name}-1.8.8-fix-str-fmt.patch
-Patch8:		%{name}-1.8.1-lib64.patch
+Source0:	https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-%(echo %{version}|cut -d. -f1-2)/hdf5-%(echo %{version}|cut -d_ -f1)/src/hdf5-%(echo %{version}|sed -e 's,_,-,g').tar.bz2
+Patch0:		hdf5-1.14.1-Werror.patch
 
 BuildRequires:	gcc-gfortran
 BuildRequires:	jpeg-devel
@@ -31,6 +35,10 @@ BuildRequires:	atomic-devel
 %endif
 BuildRequires:	pkgconfig(openssl)
 BuildRequires:	pkgconfig(zlib)
+BuildRequires:	jdk-current
+%if %{with cmake}
+BuildRequires:	cmake ninja
+%endif
 
 %description
 HDF5 is a library and file format for storing scientific data. It was
@@ -78,22 +86,45 @@ Obsoletes:	%{_lib}hdf5-static-devel < 1.8.9-3
 This package provides devel libraries and header files needed
 for develop applications requiring the "hdf5" library.
 
+%package -n java-hdf5
+Summary:	Java library for dealing with data in the HDF5 file format
+Group:		Development/Java
+
+%description -n java-hdf5
+Java library for dealing with data in the HDF5 file format
+
 %prep
-%setup -q
-#patch0 -p1
-%ifarch x86_64
-%patch8 -p0
-%endif
+%autosetup -p1 -n %{name}-%(echo %{version}|sed -e 's,_,-,g')
 find -name '*.[ch]' -o -name '*.f90' -exec chmod -x {} +
 
 %build
 find %{buildroot} -type f -size 0 -name Dependencies -print0 |xargs -0 rm -f
 find %{buildroot} -type f -size 0 -name .depend -print0 |xargs -0 rm -f
 
+. %{_sysconfdir}/profile.d/90java.sh
+
+%if %{with cmake}
+%cmake \
+	-DHDF5_BUILD_CPP_LIB:BOOL=ON \
+	-DHDF5_BUILD_FORTRAN:BOOL=ON \
+	-DHDF5_BUILD_GENERATORS:BOOL=ON \
+	-DHDF5_BUILD_JAVA:BOOL=ON \
+	-DHDF5_BUILD_PARALLEL_TOOLS:BOOL=ON \
+	-DHDF5_ENABLE_MAP_API:BOOL=ON \
+	-DHDF5_ENABLE_MIRROR_VFD:BOOL=ON \
+	-DHDF5_ENABLE_ROS3_VFD:BOOL=ON \
+	-DHDF5_GENERATE_HEADERS:BOOL=ON \
+	-DHDF5_USE_GNU_DIRS:BOOL=ON \
+	-DZLIB_USE_EXTERNAL:BOOL=ON \
+	-G Ninja
+
+%ninja_build
+%else
 %configure \
 	--disable-static \
 	--disable-dependency-tracking \
 	--enable-cxx \
+	--enable-java \
 	--enable-fortran \
 	--enable-fortran2003 \
 	--with-pthread \
@@ -101,6 +132,7 @@ find %{buildroot} -type f -size 0 -name .depend -print0 |xargs -0 rm -f
 	--enable-build-mode=production
 
 %make_build
+%endif
 
 #%check
 # all tests must pass on the following architectures
@@ -111,8 +143,18 @@ find %{buildroot} -type f -size 0 -name .depend -print0 |xargs -0 rm -f
 #%endif
 
 %install
-mkdir -p %{buildroot}%{_libdir}
+. %{_sysconfdir}/profile.d/90java.sh
+
+mkdir -p %{buildroot}%{_libdir} %{buildroot}%{_datadir}/java
+%if %{with cmake}
+%ninja_install -C build
+%else
 %make_install
+%endif
+
+mv %{buildroot}%{_libdir}/jarhdf5*.jar %{buildroot}%{_datadir}/java
+cd %{buildroot}%{_datadir}/java
+ln -s jarhdf5*.jar jarhdf5.jar
 
 %files
 %doc COPYING release_docs/RELEASE.txt
@@ -134,3 +176,6 @@ mkdir -p %{buildroot}%{_libdir}
 %{_includedir}/*.h
 %{_includedir}/*.mod
 %{_datadir}/hdf5_examples/
+
+%files -n java-hdf5
+%{_datadir}/java/*.jar
