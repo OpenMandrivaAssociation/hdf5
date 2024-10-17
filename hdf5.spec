@@ -21,7 +21,7 @@ Version:	1.14.3
 Release:	1
 License:	Distributable (see included COPYING)
 Group:		System/Libraries
-Url:		http://www.hdfgroup.org/HDF5/
+Url:		https://www.hdfgroup.org/HDF5/
 # Also: https://portal.hdfgroup.org/display/support/Downloads
 Source0:	https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-%(echo %{version}|cut -d. -f1-2)/hdf5-%(echo %{version}|cut -d_ -f1)/src/hdf5-%(echo %{version}|sed -e 's,_,-,g').tar.bz2
 Patch0:		hdf5-1.14.1-Werror.patch
