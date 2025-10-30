@@ -1,0 +1,9 @@
+# We cannot provide man page if they are missing upstream
+addFilter("W: no-manual-page-for-binary")
+
+# Wrong: libhdf5hl_fortran.so.%%{hl_major} is in %%{_lib}hdf5_hl
+# and this one is already required
+addFilter("E: no-library-dependency-for")
+
+# Perhaps not needed?
+addFilter("W: jar-not-indexed")

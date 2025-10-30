@@ -1,0 +1,9 @@
+diff -rupN hdf5-1.14.6.old/utils/subfiling_vfd/h5fuse.in hdf5-1.14.6/utils/subfiling_vfd/h5fuse.in
+--- hdf5-1.14.6.old/utils/subfiling_vfd/h5fuse.in	2025-02-05 15:11:33.000000000 +0100
++++ hdf5-1.14.6/utils/subfiling_vfd/h5fuse.in	2025-10-30 16:47:56.788673643 +0100
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env bash
++#!/usr/bin/bash
+ #
+ # Copyright by The HDF Group.
+ # All rights reserved.
