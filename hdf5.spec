@@ -31,6 +31,10 @@ Source0:	https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-%(echo %{version}|c
 Source100:	hdf5.rpmlintrc
 Patch0:		hdf5-1-14.6-fix-shebang.patch
 %if %{with cmake}
+BuildRequires:	autoconf
+BuildRequires:	automake
+BuildRequires:	libtool-base
+BuildRequires:	slibtool
 BuildRequires:	cmake >= 3.24
 BuildRequires:	ninja
 %endif
